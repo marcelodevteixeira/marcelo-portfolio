@@ -8,6 +8,7 @@ import Experience from './components/Experience';
 import Contact from './components/Contact';
 import ChatAssistant from './components/ChatAssistant';
 import Certificates from './components/Certificates';
+import CustomCursor from './components/CustomCursor';
 
 function App() {
   useEffect(() => {
@@ -16,6 +17,7 @@ function App() {
 
   return (
     <div className="bg-background min-h-screen text-text font-sans antialiased selection:bg-primary selection:text-white">
+      <CustomCursor />
       <Navbar />
       
       <main>

@@ -112,7 +112,7 @@ const Certificates: React.FC = () => {
           <div 
             ref={sliderRef}
             className={`
-              flex gap-6 overflow-x-auto no-scrollbar py-4 cursor-grab active:cursor-grabbing
+              flex gap-6 overflow-x-auto no-scrollbar py-4
               select-none
             `}
             onMouseDown={handleMouseDown}
