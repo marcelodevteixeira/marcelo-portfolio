@@ -91,7 +91,7 @@ const Certificates: React.FC = () => {
         
         {/* Standardized Header */}
         <div className="mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Certificações & <span className="text-gradient">Licenças</span>
           </h2>
           <div className="h-1 w-20 bg-primary rounded-full mb-6"></div>

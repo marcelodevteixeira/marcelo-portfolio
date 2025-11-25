@@ -158,7 +158,7 @@ const Projects: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className={`flex flex-col md:flex-row justify-between items-end mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Projetos <span className="text-gradient">Selecionados</span>
             </h2>
             <div className="h-1 w-20 bg-primary rounded-full"></div>
