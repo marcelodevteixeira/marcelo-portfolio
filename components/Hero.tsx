@@ -41,10 +41,18 @@ const Hero: React.FC = () => {
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-secondary/10 rounded-full blur-[80px] animate-pulse-slow delay-1000"></div>
 
       <div className="max-w-5xl mx-auto px-6 text-center z-10 relative">
+        
+        {/* Badge Neon - Disponível para projetos */}
         <div className={`transition-all duration-1000 ease-out transform ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="inline-block py-1 px-3 rounded-full bg-surface border border-white/10 text-primary text-sm font-medium mb-6 tracking-wide">
-            Disponível para novos projetos
-          </span>
+          <div className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-surface/50 border border-accent/20 shadow-[0_0_15px_rgba(6,182,212,0.1)] hover:border-accent/40 hover:shadow-[0_0_25px_rgba(6,182,212,0.2)] transition-all duration-500 cursor-default mb-8 group">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+            </span>
+            <span className="text-accent text-sm font-medium tracking-wide drop-shadow-[0_0_5px_rgba(6,182,212,0.4)] group-hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.6)] transition-all">
+              Disponível para novos projetos
+            </span>
+          </div>
         </div>
 
         <h1 
