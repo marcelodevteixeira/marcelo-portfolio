@@ -158,10 +158,12 @@ const Projects: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className={`flex flex-col md:flex-row justify-between items-end mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div>
-            <span className="text-primary font-medium tracking-wider uppercase text-sm">Portfólio</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mt-2 mb-4">Projetos Selecionados</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Projetos <span className="text-gradient">Selecionados</span>
+            </h2>
+            <div className="h-1 w-20 bg-primary rounded-full"></div>
           </div>
-          <a href="https://github.com" target="_blank" rel="noreferrer" className="group flex items-center gap-2 text-white border-b border-transparent hover:border-primary pb-1 transition-all">
+          <a href="https://github.com" target="_blank" rel="noreferrer" className="group flex items-center gap-2 text-white border-b border-transparent hover:border-primary pb-1 transition-all mt-4 md:mt-0">
             Ver repositórios <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </a>
         </div>

@@ -46,9 +46,12 @@ const Contact: React.FC = () => {
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none"></div>
 
       <div className="max-w-5xl mx-auto px-6 relative z-10">
-        <div className={`text-center mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Vamos Construir o <span className="text-gradient">Futuro?</span></h2>
-          <p className="text-gray-400 max-w-xl mx-auto text-lg">
+        <div className={`text-left mb-20 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Vamos Construir o <span className="text-gradient">Futuro?</span>
+          </h2>
+          <div className="h-1 w-20 bg-primary rounded-full mb-6"></div>
+          <p className="text-gray-400 max-w-xl text-lg">
             Tenho interesse em desafios que envolvam big data, automação inteligente e arquiteturas modernas.
           </p>
         </div>

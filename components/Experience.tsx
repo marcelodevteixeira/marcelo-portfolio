@@ -42,9 +42,12 @@ const Experience: React.FC = () => {
   return (
     <section id="experiencia" className="py-32 bg-background relative" ref={sectionRef}>
       <div className="max-w-4xl mx-auto px-6 relative z-10">
-        <h2 className={`text-4xl font-bold text-white mb-20 text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          Jornada <span className="text-gray-500">Profissional</span>
-        </h2>
+        <div className={`mb-20 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Jornada <span className="text-gray-500">Profissional</span>
+          </h2>
+          <div className="h-1 w-20 bg-primary rounded-full"></div>
+        </div>
         
         <div className="relative border-l border-white/10 ml-4 md:ml-0 md:pl-0 space-y-16">
           {experiences.map((exp, idx) => (

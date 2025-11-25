@@ -36,7 +36,11 @@ const Skills: React.FC = () => {
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         <div ref={sectionRef} className={`mb-16 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Arsenal <span className="text-gradient">Tecnológico</span></h2>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Arsenal <span className="text-gradient">Tecnológico</span>
+          </h2>
+          <div className="h-1 w-20 bg-primary rounded-full mb-6"></div>
+          
           <p className="text-gray-400 max-w-xl text-lg">
             Um conjunto de ferramentas modernas focadas em escalabilidade, performance e insights de dados.
           </p>

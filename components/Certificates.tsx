@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Award, BadgeCheck } from 'lucide-react';
+import { BadgeCheck } from 'lucide-react';
 
 interface Certificate {
   id: number;
@@ -84,15 +84,21 @@ const Certificates: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-background relative border-b border-white/5 overflow-hidden">
+    <section className="py-20 bg-background relative border-b border-white/5 overflow-hidden">
       
       {/* Container aligned with the rest of the site (Skills, Projects, etc.) */}
       <div className="max-w-6xl mx-auto px-6">
         
-        {/* Header */}
-        <div className="mb-8 flex items-center gap-3 opacity-80">
-          <Award className="text-primary" size={24} />
-          <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-widest">Certificações & Licenças</h3>
+        {/* Standardized Header */}
+        <div className="mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Certificações & <span className="text-gradient">Licenças</span>
+          </h2>
+          <div className="h-1 w-20 bg-primary rounded-full mb-6"></div>
+          
+          <p className="text-gray-400 max-w-xl text-lg">
+            Validações oficiais de expertise em nuvem, dados e inteligência artificial.
+          </p>
         </div>
 
         {/* Carousel Wrapper with relative positioning for masks */}
