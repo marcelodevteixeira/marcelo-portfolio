@@ -42,14 +42,18 @@ const Hero: React.FC = () => {
 
       <div className="max-w-5xl mx-auto px-6 text-center z-10 relative">
         
-        {/* Badge Neon - Disponível para projetos */}
-        <div className={`transition-all duration-1000 ease-out transform ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="inline-flex items-center gap-2 py-2 px-4 rounded-full bg-surface/50 border border-accent/20 shadow-[0_0_15px_rgba(6,182,212,0.1)] hover:border-accent/40 hover:shadow-[0_0_25px_rgba(6,182,212,0.2)] transition-all duration-500 cursor-default mb-8 group">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
-            </span>
-            <span className="text-accent text-sm font-medium tracking-wide drop-shadow-[0_0_5px_rgba(6,182,212,0.4)] group-hover:drop-shadow-[0_0_8px_rgba(6,182,212,0.6)] transition-all">
+        {/* Magic Border Badge - Disponível para projetos */}
+        <div className={`mb-8 transition-all duration-1000 ease-out transform ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className="relative inline-flex h-10 overflow-hidden rounded-full p-[2px] shadow-lg shadow-primary/20">
+            {/* Rotating Conic Gradient Layer */}
+            <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#3B82F6_0%,#8B5CF6_50%,#06B6D4_100%)]" />
+            
+            {/* Inner Dark Mask Layer */}
+            <span className="inline-flex h-full w-full cursor-default items-center justify-center rounded-full bg-surface/90 px-5 py-1 text-sm font-medium text-gray-300 backdrop-blur-3xl">
+              <span className="flex h-2 w-2 relative mr-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent"></span>
+              </span>
               Disponível para novos projetos
             </span>
           </div>
