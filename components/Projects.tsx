@@ -67,12 +67,12 @@ const ProjectCard: React.FC<{ project: Project; index: number; isVisible: boolea
         {/* Floating Action Buttons */}
         <div className="absolute top-4 right-4 z-20 flex gap-2 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
           {project.demoUrl && (
-            <a href={project.demoUrl} className="p-2 bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-white hover:text-black transition-colors">
+            <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-white hover:text-black transition-colors">
               <ExternalLink size={18} />
             </a>
           )}
           {project.githubUrl && (
-            <a href={project.githubUrl} className="p-2 bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-white hover:text-black transition-colors">
+            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="p-2 bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-white hover:bg-white hover:text-black transition-colors">
               <Github size={18} />
             </a>
           )}
@@ -127,11 +127,23 @@ const Projects: React.FC = () => {
           .order('id', { ascending: false });
 
         if (error || !data || data.length === 0) {
+           console.log("Usando mock data devido a erro ou base vazia:", error?.message);
            setProjects(MOCK_PROJECTS);
         } else {
-           setProjects(data);
+           // Mapear campos do banco (snake_case) para o frontend (camelCase)
+           const mappedProjects: Project[] = data.map((item: any) => ({
+             id: item.id,
+             title: item.title,
+             description: item.description,
+             technologies: item.technologies || [],
+             imageUrl: item.image_url, // map snake_case to camelCase
+             demoUrl: item.demo_url,   // map snake_case to camelCase
+             githubUrl: item.github_url // map snake_case to camelCase
+           }));
+           setProjects(mappedProjects);
         }
       } catch (err) {
+        console.error("Falha ao buscar projetos:", err);
         setProjects(MOCK_PROJECTS);
       } finally {
         setLoading(false);
