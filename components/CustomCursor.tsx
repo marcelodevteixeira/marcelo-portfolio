@@ -3,10 +3,13 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const CustomCursor: React.FC = () => {
   const cursorRef = useRef<HTMLDivElement>(null); // Seta Retro
-  const followerRef = useRef<HTMLDivElement>(null); // Luz Neon
+  const followerRef = useRef<HTMLDivElement>(null); // Luz Principal (Foco)
+  const trailRef = useRef<HTMLDivElement>(null); // Luz Secundária (Rastro)
   
   const mouseRef = useRef({ x: 0, y: 0 });
   const followerPosRef = useRef({ x: 0, y: 0 });
+  const trailPosRef = useRef({ x: 0, y: 0 });
+  
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -23,19 +26,29 @@ const CustomCursor: React.FC = () => {
 
     const onMouseLeave = () => setIsVisible(false);
 
-    // Loop de Animação para o seguidor (Luz Suave)
+    // Loop de Animação
     let animationFrameId: number;
     const animate = () => {
-      // Lerp (Linear Interpolation)
-      // Aumentei para 0.15 para ficar mais responsivo e "colado" no mouse, sem perder a elegância
-      const factor = 0.15; 
-      
-      followerPosRef.current.x += (mouseRef.current.x - followerPosRef.current.x) * factor;
-      followerPosRef.current.y += (mouseRef.current.y - followerPosRef.current.y) * factor;
+      // Configuração da Física
+      // Follower: Resposta rápida (Foco da luz)
+      const followerFactor = 0.2; 
+      // Trail: Resposta lenta (Cria o efeito de rastro/arrasto)
+      const trailFactor = 0.06;
 
+      // Atualiza Luz Principal
+      followerPosRef.current.x += (mouseRef.current.x - followerPosRef.current.x) * followerFactor;
+      followerPosRef.current.y += (mouseRef.current.y - followerPosRef.current.y) * followerFactor;
+
+      // Atualiza Luz de Rastro
+      trailPosRef.current.x += (mouseRef.current.x - trailPosRef.current.x) * trailFactor;
+      trailPosRef.current.y += (mouseRef.current.y - trailPosRef.current.y) * trailFactor;
+
+      // Aplica transformações
       if (followerRef.current) {
-        // Move o elemento. A centralização é feita via margin negativa no CSS
         followerRef.current.style.transform = `translate3d(${followerPosRef.current.x}px, ${followerPosRef.current.y}px, 0)`;
+      }
+      if (trailRef.current) {
+        trailRef.current.style.transform = `translate3d(${trailPosRef.current.x}px, ${trailPosRef.current.y}px, 0)`;
       }
       
       animationFrameId = requestAnimationFrame(animate);
@@ -78,24 +91,46 @@ const CustomCursor: React.FC = () => {
         </svg>
       </div>
       
-      {/* Neon Follower (Luz Ambiente Suave) */}
+      {/* 
+         EFEITO DE NEON EM DUAS CAMADAS 
+         O uso de mix-blend-mode: screen permite que as luzes se somem quando sobrepostas.
+      */}
+
+      {/* Camada 1: O Rastro (Maior, mais difuso, segue devagar) */}
       <div 
-        ref={followerRef}
+        ref={trailRef}
         className={`
-          fixed top-0 left-0 pointer-events-none z-[9998]
-          w-[600px] h-[600px] -ml-[300px] -mt-[300px]
+          fixed top-0 left-0 pointer-events-none z-[9997]
+          w-[800px] h-[800px] -ml-[400px] -mt-[400px]
           rounded-full
           ${isVisible ? 'opacity-100' : 'opacity-0'}
         `}
         style={{
-          // Gradiente radial muito suave (alpha baixo) para não ofuscar o conteúdo
-          background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(139,92,246,0.05) 40%, transparent 70%)',
-          // Blur alto para difundir a luz
-          filter: 'blur(80px)',
-          // Mix blend mode ajuda a luz a se somar ao fundo sem lavar as cores escuras
+          // Gradiente Roxo/Azul muito suave para o fundo
+          background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(59,130,246,0.05) 50%, transparent 70%)',
+          filter: 'blur(60px)',
           mixBlendMode: 'screen',
-          // Transição APENAS na opacidade. Transform é controlado via JS para performance máxima.
           transition: 'opacity 0.5s ease',
+          willChange: 'transform' // Otimização de performance
+        }}
+      />
+
+      {/* Camada 2: O Foco (Menor, mais brilhante, segue rápido) */}
+      <div 
+        ref={followerRef}
+        className={`
+          fixed top-0 left-0 pointer-events-none z-[9998]
+          w-[500px] h-[500px] -ml-[250px] -mt-[250px]
+          rounded-full
+          ${isVisible ? 'opacity-100' : 'opacity-0'}
+        `}
+        style={{
+          // Gradiente Azul mais intenso no centro
+          background: 'radial-gradient(circle, rgba(59,130,246,0.25) 0%, rgba(6,182,212,0.1) 40%, transparent 70%)',
+          filter: 'blur(50px)',
+          mixBlendMode: 'screen',
+          transition: 'opacity 0.5s ease',
+          willChange: 'transform'
         }}
       />
     </>
