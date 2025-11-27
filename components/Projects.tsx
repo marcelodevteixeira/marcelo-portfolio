@@ -2,35 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { ExternalLink, Github, ArrowUpRight } from 'lucide-react';
 import { supabase } from '../services/supabaseClient';
 import { Project } from '../types';
-
-const MOCK_PROJECTS: Project[] = [
-  {
-    id: 1,
-    title: "Sales Forecast AI",
-    description: "Plataforma de inteligência preditiva que analisa tendências históricas para projetar receitas futuras com 94% de precisão.",
-    technologies: ["Python", "TensorFlow", "FastAPI"],
-    imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2670&auto=format&fit=crop",
-    demoUrl: "#",
-    githubUrl: "#"
-  },
-  {
-    id: 2,
-    title: "Data Lakehouse Core",
-    description: "Arquitetura unificada de dados processando 5TB+ diariamente com pipelines streaming em tempo real.",
-    technologies: ["Spark", "Delta Lake", "AWS Glue"],
-    imageUrl: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=2682&auto=format&fit=crop",
-    githubUrl: "#"
-  },
-  {
-    id: 3,
-    title: "Neural Vision Dashboard",
-    description: "Dashboard analítico para monitoramento de sistemas de visão computacional em linhas de produção industriais.",
-    technologies: ["React", "D3.js", "YOLOv8"],
-    imageUrl: "https://images.unsplash.com/photo-1518932945647-7a1c969f8be2?q=80&w=2532&auto=format&fit=crop",
-    demoUrl: "#",
-    githubUrl: "#"
-  }
-];
+import { portfolioData } from '../data/portfolioData';
 
 // Sub-component to handle individual project card logic (like image loading)
 const ProjectCard: React.FC<{ project: Project; index: number; isVisible: boolean }> = ({ project, index, isVisible }) => {
@@ -126,24 +98,23 @@ const Projects: React.FC = () => {
           .order('id', { ascending: false });
 
         if (error || !data || data.length === 0) {
-           console.log("Usando mock data devido a erro ou base vazia:", error?.message);
-           setProjects(MOCK_PROJECTS);
+           console.log("Usando dados do arquivo portfolioData (falha Supabase ou vazio).");
+           setProjects(portfolioData.projects);
         } else {
-           // Mapear campos do banco (snake_case) para o frontend (camelCase)
            const mappedProjects: Project[] = data.map((item: any) => ({
              id: item.id,
              title: item.title,
              description: item.description,
              technologies: item.technologies || [],
-             imageUrl: item.image_url, // map snake_case to camelCase
-             demoUrl: item.demo_url,   // map snake_case to camelCase
-             githubUrl: item.github_url // map snake_case to camelCase
+             imageUrl: item.image_url,
+             demoUrl: item.demo_url,
+             githubUrl: item.github_url
            }));
            setProjects(mappedProjects);
         }
       } catch (err) {
         console.error("Falha ao buscar projetos:", err);
-        setProjects(MOCK_PROJECTS);
+        setProjects(portfolioData.projects);
       } finally {
         setLoading(false);
       }
@@ -162,7 +133,7 @@ const Projects: React.FC = () => {
             </h2>
             <div className="h-1 w-20 bg-primary rounded-full"></div>
           </div>
-          <a href="https://github.com" target="_blank" rel="noreferrer" className="group flex items-center gap-2 text-white border-b border-transparent hover:border-primary pb-1 transition-all mt-4 md:mt-0">
+          <a href={portfolioData.personal.github} target="_blank" rel="noreferrer" className="group flex items-center gap-2 text-white border-b border-transparent hover:border-primary pb-1 transition-all mt-4 md:mt-0">
             Ver repositórios <ArrowUpRight size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </a>
         </div>

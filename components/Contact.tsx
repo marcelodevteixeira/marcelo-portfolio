@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Linkedin, Github, Mail, CheckCircle } from 'lucide-react';
 import { supabase } from '../services/supabaseClient';
 import { ContactForm } from '../types';
+import { portfolioData } from '../data/portfolioData';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState<ContactForm>({ name: '', email: '', message: '' });
@@ -66,25 +67,25 @@ const Contact: React.FC = () => {
               <h3 className="text-2xl font-bold text-white mb-6">Canais Diretos</h3>
               
               <div className="space-y-6">
-                <a href="mailto:contato@marcelo.ai" className="flex items-center gap-4 text-gray-300 hover:text-white group transition-colors">
+                <a href={`mailto:${portfolioData.personal.email}`} className="flex items-center gap-4 text-gray-300 hover:text-white group transition-colors">
                   <div className="p-3 bg-white/5 rounded-full group-hover:bg-primary/20 transition-colors">
                     <Mail className="text-primary" />
                   </div>
-                  <span className="text-lg">contato@marcelo.ai</span>
+                  <span className="text-lg">{portfolioData.personal.email}</span>
                 </a>
                 
-                <a href="#" className="flex items-center gap-4 text-gray-300 hover:text-white group transition-colors">
+                <a href={portfolioData.personal.linkedin} className="flex items-center gap-4 text-gray-300 hover:text-white group transition-colors">
                   <div className="p-3 bg-white/5 rounded-full group-hover:bg-[#0077b5]/20 transition-colors">
                     <Linkedin className="text-[#0077b5]" />
                   </div>
-                  <span className="text-lg">linkedin.com/in/marcelo</span>
+                  <span className="text-lg">Linkedin</span>
                 </a>
                 
-                <a href="#" className="flex items-center gap-4 text-gray-300 hover:text-white group transition-colors">
+                <a href={portfolioData.personal.github} className="flex items-center gap-4 text-gray-300 hover:text-white group transition-colors">
                   <div className="p-3 bg-white/5 rounded-full group-hover:bg-white/20 transition-colors">
                     <Github className="text-white" />
                   </div>
-                  <span className="text-lg">github.com/marcelo</span>
+                  <span className="text-lg">GitHub</span>
                 </a>
               </div>
             </div>

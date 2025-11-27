@@ -1,34 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ExperienceItem } from '../types';
-
-const experiences: ExperienceItem[] = [
-  {
-    id: 1,
-    company: "Tech Solutions Inc.",
-    role: "Engenheiro de Dados Pleno",
-    period: "2022 - Presente",
-    responsibilities: [
-      "Arquitetura de Data Lake na AWS processando TBs de dados.",
-      "Redução de custos de infraestrutura em 30% via otimização Spark.",
-      "Liderança técnica de squad focado em Machine Learning Ops."
-    ]
-  },
-  {
-    id: 2,
-    company: "DataCorp",
-    role: "Analista de BI",
-    period: "2020 - 2022",
-    responsibilities: [
-      "Desenvolvimento de dashboards estratégicos para C-Level.",
-      "Implementação de cultura Data-Driven em 4 departamentos.",
-      "Modelagem de dados (Star Schema) para Data Warehouse."
-    ]
-  }
-];
+import { portfolioData } from '../data/portfolioData';
 
 const Experience: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const experiences = portfolioData.experience;
 
   useEffect(() => {
     const observer = new IntersectionObserver(

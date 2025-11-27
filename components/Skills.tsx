@@ -1,17 +1,21 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Code2, Database, Layout, Server, BarChart3, Cloud, Container, Brain } from 'lucide-react';
-import { Skill } from '../types';
+import { Code2, Database, Layout, Server, BarChart3, Cloud, Container, Brain, Terminal, Globe } from 'lucide-react';
+import { portfolioData } from '../data/portfolioData';
 
-const skills: Skill[] = [
-  { name: 'Python', icon: <Code2 /> },
-  { name: 'SQL', icon: <Database /> },
-  { name: 'JavaScript', icon: <Code2 /> },
-  { name: 'React', icon: <Layout /> },
-  { name: 'Power BI', icon: <BarChart3 /> },
-  { name: 'Machine Learning', icon: <Brain /> },
-  { name: 'AWS', icon: <Cloud /> },
-  { name: 'Docker', icon: <Container /> },
-];
+// Mapping utility to get icon by name
+const getIconByName = (name: string) => {
+  const normalized = name.toLowerCase();
+  if (normalized.includes('python')) return <Code2 />;
+  if (normalized.includes('sql') || normalized.includes('data')) return <Database />;
+  if (normalized.includes('javascript') || normalized.includes('typescript')) return <Code2 />;
+  if (normalized.includes('react') || normalized.includes('frontend')) return <Layout />;
+  if (normalized.includes('bi') || normalized.includes('chart') || normalized.includes('tableau')) return <BarChart3 />;
+  if (normalized.includes('machine') || normalized.includes('ai') || normalized.includes('tensor')) return <Brain />;
+  if (normalized.includes('aws') || normalized.includes('azure') || normalized.includes('cloud')) return <Cloud />;
+  if (normalized.includes('docker') || normalized.includes('kubernetes')) return <Container />;
+  if (normalized.includes('html') || normalized.includes('css')) return <Globe />;
+  return <Terminal />;
+};
 
 const Skills: React.FC = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -19,7 +23,6 @@ const Skills: React.FC = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
-      // Atualiza o estado com base na visibilidade (true ou false)
       setIsVisible(entry.isIntersecting);
     }, { threshold: 0.1 });
 
@@ -48,9 +51,9 @@ const Skills: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 group/grid">
-          {skills.map((skill, index) => (
+          {portfolioData.skills.map((skillName, index) => (
             <div 
-              key={skill.name}
+              key={skillName}
               className={`
                 relative p-6 bg-surface/50 border border-white/5 rounded-2xl 
                 transition-all duration-500 ease-out
@@ -62,10 +65,10 @@ const Skills: React.FC = () => {
             >
               <div className="flex flex-col items-center justify-center gap-4 text-center">
                 <div className="p-4 bg-white/5 rounded-xl text-primary group-hover/card:text-white group-hover/card:scale-110 group-hover/card:bg-primary transition-all duration-300">
-                  {React.cloneElement(skill.icon as React.ReactElement<any>, { size: 32 })}
+                  {React.cloneElement(getIconByName(skillName) as React.ReactElement<any>, { size: 32 })}
                 </div>
                 <h3 className="text-gray-300 font-medium group-hover/card:text-white transition-colors">
-                  {skill.name}
+                  {skillName}
                 </h3>
               </div>
             </div>

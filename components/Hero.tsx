@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { ArrowRight, ChevronDown } from 'lucide-react';
+import { portfolioData } from '../data/portfolioData';
 
 const Hero: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
@@ -85,7 +86,7 @@ const Hero: React.FC = () => {
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <span className="text-white">Marcelo</span> <span className="text-gray-500">Teixeira</span>
+          <span className="text-white">{portfolioData.hero.headlinePrefix}</span> <span className="text-gray-500">{portfolioData.hero.headlineSuffix}</span>
         </h1>
         
         <p 
@@ -93,7 +94,11 @@ const Hero: React.FC = () => {
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          Análise e Ciência de Dados, Dev & <span className="text-gradient font-medium">Inteligência Artificial</span>
+           {portfolioData.hero.subHeadline.split('&').map((part, i, arr) => (
+             <React.Fragment key={i}>
+                {i === arr.length - 1 ? <span className="text-gradient font-medium">{part}</span> : part + (i < arr.length -1 ? ' & ' : '')}
+             </React.Fragment>
+          ))}
         </p>
 
         <p 
@@ -101,7 +106,7 @@ const Hero: React.FC = () => {
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          Transformo dados brutos em decisões estratégicas através de pipelines robustos, dashboards intuitivos e modelos preditivos.
+          {portfolioData.hero.description}
         </p>
 
         <div 

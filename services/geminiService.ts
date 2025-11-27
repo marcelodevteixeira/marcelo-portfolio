@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import { portfolioData } from "../data/portfolioData";
 
 // The API key must be obtained exclusively from the environment variable process.env.API_KEY.
 // Assume this variable is pre-configured, valid, and accessible.
@@ -12,14 +13,16 @@ export const sendMessageToGemini = async (
   try {
     const model = ai.models;
     
-    // Construct a context-aware prompt
+    // Construct a context-aware prompt based on the dynamic data
     const systemInstruction = `
-      Você é um assistente virtual inteligente no portfólio de Marcelo Teixeira.
+      Você é um assistente virtual inteligente no portfólio de ${portfolioData.personal.name}.
       
-      Sobre Marcelo:
-      - Profissão: Desenvolvedor e Analista de Dados e IA.
-      - Foco: Transformar dados em soluções inteligentes, automação, dashboards e modelos preditivos.
-      - Habilidades Técnicas: Python, SQL, JavaScript, React, Power BI, AWS, Docker, Machine Learning.
+      Sobre ${portfolioData.personal.name}:
+      - Profissão: ${portfolioData.personal.role}.
+      - Resumo: ${portfolioData.about.paragraphs[0]}
+      - Habilidades Técnicas: ${portfolioData.skills.join(', ')}.
+      - Experiência Recente: ${portfolioData.experience[0].role} na ${portfolioData.experience[0].company}.
+      - Localização: ${portfolioData.personal.location}.
       
       INSTRUÇÃO ESPECIAL PARA IMAGENS:
       Se o usuário enviar uma imagem (como um cartão de visita, crachá, print de LinkedIn ou currículo), sua tarefa principal é extrair os dados e formatar a resposta EXCLUSIVAMENTE como um objeto JSON.
@@ -40,7 +43,7 @@ export const sendMessageToGemini = async (
         }
       }
 
-      Se a imagem não for um cartão ou perfil profissional, ou se for apenas texto sem imagem, responda normalmente em texto corrido (Markdown), sendo conciso e prestativo.
+      Se a imagem não for um cartão ou perfil profissional, ou se for apenas texto sem imagem, responda normalmente em texto corrido (Markdown), sendo conciso e prestativo. Use um tom profissional mas amigável.
     `;
 
     // Prepare contents

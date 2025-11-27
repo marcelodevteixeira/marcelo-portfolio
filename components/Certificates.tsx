@@ -1,26 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { BadgeCheck } from 'lucide-react';
-
-interface Certificate {
-  id: number;
-  title: string;
-  issuer: string;
-  year: string;
-  color: string;
-}
-
-const certificates: Certificate[] = [
-  { id: 1, title: "AWS Solutions Architect", issuer: "Amazon Web Services", year: "2023", color: "from-orange-500 to-yellow-500" },
-  { id: 2, title: "Google Data Engineer", issuer: "Google Cloud", year: "2023", color: "from-blue-500 to-cyan-500" },
-  { id: 3, title: "TensorFlow Developer", issuer: "TensorFlow Certificate", year: "2022", color: "from-orange-600 to-red-600" },
-  { id: 4, title: "Azure AI Engineer", issuer: "Microsoft", year: "2022", color: "from-blue-600 to-indigo-600" },
-  { id: 5, title: "Professional Data Analyst", issuer: "IBM", year: "2021", color: "from-blue-400 to-blue-600" },
-  { id: 6, title: "Meta Database Engineer", issuer: "Meta", year: "2021", color: "from-gray-500 to-gray-700" },
-  { id: 7, title: "Spark & Hadoop Big Data", issuer: "Udacity", year: "2020", color: "from-yellow-400 to-orange-400" },
-];
+import { portfolioData } from '../data/portfolioData';
 
 // Tripling the data to create a seamless infinite loop buffer
-const infiniteCertificates = [...certificates, ...certificates, ...certificates];
+const infiniteCertificates = [...portfolioData.certificates, ...portfolioData.certificates, ...portfolioData.certificates];
 
 const Certificates: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
