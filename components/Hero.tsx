@@ -23,6 +23,14 @@ const Hero: React.FC = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section 
       ref={containerRef}
@@ -90,6 +98,7 @@ const Hero: React.FC = () => {
         >
           <a
             href="#projetos"
+            onClick={(e) => scrollToSection(e, 'projetos')}
             className="group relative px-8 py-3 bg-white text-black rounded-full font-semibold transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] overflow-hidden"
           >
             <span className="relative z-10 flex items-center gap-2">
@@ -100,6 +109,7 @@ const Hero: React.FC = () => {
 
           <a
             href="#contato"
+            onClick={(e) => scrollToSection(e, 'contato')}
             className="px-8 py-3 rounded-full font-medium text-white border border-white/10 hover:bg-white/5 transition-all hover:border-white/30"
           >
             Entrar em Contato

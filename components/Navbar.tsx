@@ -16,7 +16,8 @@ const Navbar: React.FC = () => {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          return rect.top >= 0 && rect.top <= 300;
+          // Detecta se a seção está visível na parte superior da tela
+          return rect.top >= -100 && rect.top <= 300;
         }
         return false;
       });
@@ -26,6 +27,15 @@ const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setIsOpen(false);
+    }
+  };
 
   const navLinks = [
     { name: 'Sobre', href: '#sobre', id: 'sobre' },
@@ -45,7 +55,7 @@ const Navbar: React.FC = () => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <a href="#" className="text-2xl font-bold tracking-tighter text-white z-50">
+          <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="text-2xl font-bold tracking-tighter text-white z-50">
             M<span className="text-primary">.</span>
           </a>
 
@@ -55,6 +65,7 @@ const Navbar: React.FC = () => {
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.id)}
                 className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 rounded-full hover:bg-white/5 ${
                   activeSection === link.id ? 'text-white' : 'text-gray-400 hover:text-white'
                 }`}
@@ -87,7 +98,7 @@ const Navbar: React.FC = () => {
           <a
             key={link.name}
             href={link.href}
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => handleNavClick(e, link.id)}
             className={`text-3xl font-light text-white transition-all duration-300 transform ${
               isOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
             }`}

@@ -1,18 +1,36 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Sparkles, Paperclip, Image as ImageIcon, Briefcase, Mail, Phone, Globe, MapPin } from 'lucide-react';
+import { MessageSquare, X, Send, Sparkles, Paperclip, Image as ImageIcon, Briefcase, Mail, Phone, Globe, MapPin, Trash2 } from 'lucide-react';
 import { sendMessageToGemini } from '../services/geminiService';
 import { ChatMessage, ContactCardData } from '../types';
 
 const ChatAssistant: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: 'Olá! Sou a IA do Marcelo. Posso analisar imagens de cartões de visita ou responder perguntas sobre o portfólio.' }
-  ]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Initialize state from localStorage if available
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('marcelo_portfolio_chat');
+        if (saved) {
+          return JSON.parse(saved);
+        }
+      } catch (e) {
+        console.error("Failed to parse chat history", e);
+      }
+    }
+    return [{ role: 'model', text: 'Olá! Sou a IA do Marcelo. Posso analisar imagens de cartões de visita ou responder perguntas sobre o portfólio.' }];
+  });
+
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Persistence Effect
+  useEffect(() => {
+    localStorage.setItem('marcelo_portfolio_chat', JSON.stringify(messages));
+  }, [messages]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -31,6 +49,12 @@ const ChatAssistant: React.FC = () => {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handleClearChat = () => {
+    const initialMsg: ChatMessage[] = [{ role: 'model', text: 'Olá! Sou a IA do Marcelo. Posso analisar imagens de cartões de visita ou responder perguntas sobre o portfólio.' }];
+    setMessages(initialMsg);
+    localStorage.removeItem('marcelo_portfolio_chat');
   };
 
   const handleSend = async () => {
@@ -105,9 +129,21 @@ const ChatAssistant: React.FC = () => {
               <Sparkles className="text-primary w-5 h-5" />
               <span className="font-semibold text-white">Assistente Virtual IA</span>
             </div>
-            <button onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-white">
-              <X size={18} />
-            </button>
+            <div className="flex items-center gap-1">
+              <button 
+                onClick={handleClearChat} 
+                className="p-1.5 text-gray-400 hover:text-red-400 hover:bg-white/5 rounded-full transition-colors"
+                title="Limpar conversa"
+              >
+                <Trash2 size={16} />
+              </button>
+              <button 
+                onClick={() => setIsOpen(false)} 
+                className="p-1.5 text-gray-400 hover:text-white hover:bg-white/5 rounded-full transition-colors"
+              >
+                <X size={18} />
+              </button>
+            </div>
           </div>
 
           {/* Messages */}
