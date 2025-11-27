@@ -93,7 +93,7 @@ const Hero: React.FC = () => {
             loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          Engenharia de Dados & <span className="text-gradient font-medium">Inteligência Artificial</span>
+          Análise e Ciência de Dados, Dev & <span className="text-gradient font-medium">Inteligência Artificial</span>
         </p>
 
         <p 
