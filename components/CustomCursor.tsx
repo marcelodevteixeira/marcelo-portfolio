@@ -106,9 +106,9 @@ const CustomCursor: React.FC = () => {
           ${isVisible ? 'opacity-100' : 'opacity-0'}
         `}
         style={{
-          // Gradiente Roxo/Azul muito suave para o fundo
-          background: 'radial-gradient(circle, rgba(139,92,246,0.15) 0%, rgba(59,130,246,0.05) 50%, transparent 70%)',
-          filter: 'blur(60px)',
+          // Reduzi a opacidade de 0.15 para 0.10 e aumentei o blur de 60px para 80px
+          background: 'radial-gradient(circle, rgba(139,92,246,0.10) 0%, rgba(59,130,246,0.03) 50%, transparent 70%)',
+          filter: 'blur(80px)',
           mixBlendMode: 'screen',
           transition: 'opacity 0.5s ease',
           willChange: 'transform' // Otimização de performance
@@ -125,9 +125,9 @@ const CustomCursor: React.FC = () => {
           ${isVisible ? 'opacity-100' : 'opacity-0'}
         `}
         style={{
-          // Gradiente Azul mais intenso no centro
-          background: 'radial-gradient(circle, rgba(59,130,246,0.25) 0%, rgba(6,182,212,0.1) 40%, transparent 70%)',
-          filter: 'blur(50px)',
+          // Reduzi a opacidade de 0.25 para 0.18 e aumentei o blur de 50px para 70px
+          background: 'radial-gradient(circle, rgba(59,130,246,0.18) 0%, rgba(6,182,212,0.08) 40%, transparent 70%)',
+          filter: 'blur(70px)',
           mixBlendMode: 'screen',
           transition: 'opacity 0.5s ease',
           willChange: 'transform'
