@@ -24,10 +24,25 @@ const infiniteCertificates = [...certificates, ...certificates, ...certificates]
 
 const Certificates: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
+
+  // Reveal Animation Logic
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    
+    return () => observer.disconnect();
+  }, []);
 
   // Auto-scroll logic (slow drift) with infinite loop reset
   useEffect(() => {
@@ -38,15 +53,11 @@ const Certificates: React.FC = () => {
         sliderRef.current.scrollLeft += 0.5; // Speed of drift
 
         // Infinite Loop Logic:
-        // When we have scrolled past the exact width of the first set (1/3 of total), 
-        // we reset to 0. Since the 2nd set starts identically to the 1st, the jump is invisible.
-        // Using -1 buffer to avoid rounding glitches.
         const oneSetWidth = sliderRef.current.scrollWidth / 3;
         
         if (sliderRef.current.scrollLeft >= oneSetWidth) {
           sliderRef.current.scrollLeft = 0; 
         } 
-        // Also handle backward drag reset
         else if (sliderRef.current.scrollLeft <= 0) {
            sliderRef.current.scrollLeft = oneSetWidth;
         }
@@ -84,10 +95,10 @@ const Certificates: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-background relative border-b border-white/5 overflow-hidden">
+    <section ref={sectionRef} className="py-20 bg-background relative border-b border-white/5 overflow-hidden">
       
       {/* Container aligned with the rest of the site (Skills, Projects, etc.) */}
-      <div className="max-w-6xl mx-auto px-6">
+      <div className={`max-w-6xl mx-auto px-6 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         
         {/* Standardized Header */}
         <div className="mb-12">

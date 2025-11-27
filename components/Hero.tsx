@@ -7,7 +7,17 @@ const Hero: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    setLoaded(true);
+    // Observer para repetir animação ao sair/entrar da tela
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setLoaded(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
 
     const handleMouseMove = (e: MouseEvent) => {
       if (containerRef.current) {
@@ -20,7 +30,10 @@ const Hero: React.FC = () => {
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      observer.disconnect();
+    };
   }, []);
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {

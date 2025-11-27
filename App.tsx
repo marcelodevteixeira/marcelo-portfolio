@@ -12,7 +12,7 @@ import CustomCursor from './components/CustomCursor';
 
 function App() {
   useEffect(() => {
-    console.log("System Checkpoint: save01");
+    console.log("System Checkpoint: save02");
   }, []);
 
   return (
@@ -33,7 +33,7 @@ function App() {
       <footer className="py-8 border-t border-gray-800 text-center text-gray-500 text-sm bg-background">
         <p>© {new Date().getFullYear()} Marcelo Teixeira. Todos os direitos reservados.</p>
         <p className="mt-2 text-xs">Desenvolvido com React, Tailwind, Supabase & Gemini AI.</p>
-        <p className="mt-1 text-[10px] text-gray-700 font-mono">v.save01</p>
+        <p className="mt-1 text-[10px] text-gray-700 font-mono">v.save02</p>
       </footer>
 
       <ChatAssistant />

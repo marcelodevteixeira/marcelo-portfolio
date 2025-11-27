@@ -11,7 +11,10 @@ const Contact: React.FC = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
+      ([entry]) => { 
+        // Atualiza o estado com base na visibilidade (true ou false)
+        setIsVisible(entry.isIntersecting); 
+      },
       { threshold: 0.1 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
